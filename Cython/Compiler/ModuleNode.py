@@ -2869,10 +2869,6 @@ class ModuleNode(Nodes.Node, Nodes.BlockNode):
         # TODO: Refactor to move module state struct decl closer to the static decl
         code.putln('typedef struct {')
 
-        # putting the global scope mutex could possibly be conditional
-        code.globalstate.use_utility_code(UtilityCode.load_cached(
-            "AccessPyMutexForFreeThreading", "ModuleSetupCode.c"
-        ))
         code.putln('#if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING')
         code.putln(f'PyMutex {Naming.scope_mutex_cname};')
         code.putln('#endif')
